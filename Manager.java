@@ -22,7 +22,12 @@ public class Manager extends BaseModel {
 
             switch (choice) {
                 case 1:
-
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
                     break;
                 case 5:
                     return;
@@ -31,13 +36,17 @@ public class Manager extends BaseModel {
             }
         }
     }
-`
+
     public void ListSalespersons(Connection con) throws SQLException{
-    
+        System.out.println("Choose ordering:");
+        System.out.println("1. By ascending order");
+        System.out.println("2. By descending order");
+        System.out.print("Choose the list ordering: ");
     }
     
     public void CountTransaction(Connection con) throws SQLException{
-    
+        System.out.print("Type in the lower bound for years of experience: ");
+        System.out.print("Type in the upper bound for years of experience: ");
     }
     
     public void ListManufacturers(Connection con) throws SQLException{
@@ -45,6 +54,6 @@ public class Manager extends BaseModel {
     }
     
     public void ShowNParts(Connection con) throws SQLException{
-    
+        System.out.print("Type in the number of parts: ");
     }
 }

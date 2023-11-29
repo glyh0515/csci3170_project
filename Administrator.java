@@ -32,7 +32,7 @@ public class Administrator extends BaseModel {
 					break;
 				case 2:
 					try {
-						System.out.println("Processing...");
+						System.out.print("Processing...");
 						deleteAll();
 						System.out.println("Done! Database is removed");
 					} catch (Exception e) {
