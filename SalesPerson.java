@@ -1,14 +1,9 @@
 import java.sql.*;
 import java.util.Scanner;
 
-public class SalesPerson {
-
-    Connection connection;
-    Scanner scanner;
+public class SalesPerson extends BaseModel {
 
     public SalesPerson(Connection connection, Scanner scanner) {
-        this.connection = connection;
-        this.scanner = scanner;
+        super(connection, scanner);
     }
-
 }

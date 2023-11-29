@@ -1,19 +1,23 @@
 import java.sql.*;
 import java.util.Scanner;
 
-public class Administrator {
-
-	Connection connection = null;
-	Scanner scanner;
+public class Administrator extends BaseModel {
 
 	public Administrator(Connection connection, Scanner scanner) {
-		this.connection = connection;
-		this.scanner = scanner;
+		super(connection, scanner);
 	}
 
 	public void showAdminstratorPanel() {
 		while (true) {
-			int choice = getValidChoiceFromAdministrator();
+
+			System.out.println("----Operations for adminstrator menu----");
+			System.out.println("What kinds of operation would you like to perform?");
+			System.out.println("1. Create all tables");
+			System.out.println("2. Delete all tables");
+			System.out.println("3. Load from datafile");
+			System.out.println("4. Show content of a table");
+			System.out.println("5. Return to the main menu");
+			int choice = getValidChoice(1, 5);
 
 			switch (choice) {
 				case 1:
@@ -49,37 +53,6 @@ public class Administrator {
 					return;
 				default:
 					break;
-			}
-		}
-	}
-
-	private int getValidChoiceFromAdministrator() {
-		System.out.println("----Operations for adminstrator menu----");
-		System.out.println("What kinds of operation would you like to perform?");
-		System.out.println("1. Create all tables");
-		System.out.println("2. Delete all tables");
-		System.out.println("3. Load from datafile");
-		System.out.println("4. Show content of a table");
-		System.out.println("5. Return to the main menu");
-
-		while (true) {
-			int choice = 0;
-			System.out.print("Enter your choice: ");
-
-			try {
-				choice = scanner.nextInt();
-				scanner.nextLine();
-				System.out.println("");
-
-				if (choice >= 1 && choice <= 5) {
-					return choice;
-				} else {
-					System.out.println("Incorrect Input. Please enter a number from 1 - 5.");
-				}
-
-			} catch (Exception e) {
-				System.out.println("Incorrect Input. Please enter a number from 1 - 5.");
-				scanner.nextLine();
 			}
 		}
 	}
