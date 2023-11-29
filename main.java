@@ -8,9 +8,8 @@ public class Main {
 
     public static void main(String[] args) {
         Connection connection = connectToMySQL();
-        System.out.println("Hello");
 
-        System.out.println("Welcome to sales system");
+        System.out.println("Welcome to sales system!");
         try {
             CreateAll(connection);
         } catch (SQLException e) {
