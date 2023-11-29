@@ -8,7 +8,7 @@ public class Administrator {
         this.connection = connection;
     }
 
-    public void CreateAll() throws SQLException {
+    public void createAll() throws SQLException {
         Statement stmt = connection.createStatement();
         stmt.executeUpdate(
                 "CREATE TABLE Category(CID INT(1) UNSIGNED NOT NULL, CNAME CHAR(20) NOT NULL, PRIMARY KEY(CID))");
@@ -22,7 +22,7 @@ public class Administrator {
                 "CREATE TABLE Transaction(TID INT(4) UNSIGNED NOT NULL, PID INT(3) UNSIGNED NOT NULL, SID INT(2) UNSIGNED NOT NULL, TDATE DATE, PRIMARY KEY (TID), FOREIGN KEY (PID) REFERENCES Part(PID), FOREIGN KEY (SID) REFERENCES Salesperson(SID))");
     }
 
-    public void DeleteAll() throws SQLException {
+    public void deleteAll() throws SQLException {
         Statement stmt = connection.createStatement();
         stmt.executeUpdate("DROP TABLE Category");
         stmt.executeUpdate("DROP TABLE Manufacturer");
