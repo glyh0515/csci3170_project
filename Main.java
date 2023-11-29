@@ -6,15 +6,16 @@ public class Main {
     public static String dbAddress = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db11?autoReconnect=true&useSSL=false";
     public static String dbUsername = "Group11";
     public static String dbPassword = "CSCI3170";
+    public static Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) {
         Connection connection = connectToMySQL();
 
         System.out.println("Welcome to sales system!\n");
 
-        Administrator admin = new Administrator(connection);
-        Manager manager = new Manager(connection);
-        SalesPerson salesPerson = new SalesPerson(connection);
+        Administrator admin = new Administrator(connection, scanner);
+        Manager manager = new Manager(connection, scanner);
+        SalesPerson salesPerson = new SalesPerson(connection, scanner);
 
         boolean end = false;
         while (!end) {
@@ -22,7 +23,7 @@ public class Main {
 
             switch (choice) {
                 case 1:
-
+                    admin.showAdminstratorPanel();
                     break;
 
                 case 2:
@@ -45,6 +46,7 @@ public class Main {
 
         System.out.println("System ends! Thank you.");
         disconnectFromMySQL(connection);
+        scanner.close();
 
     }
 
@@ -81,7 +83,6 @@ public class Main {
         System.out.println("3. Operations for manager");
         System.out.println("4. Exit this program");
 
-        Scanner scanner = new Scanner(System.in);
         while (true) {
             int choice = 0;
             System.out.print("Enter your choice: ");
@@ -90,7 +91,6 @@ public class Main {
                 System.out.println("");
 
                 if (choice >= 1 && choice <= 4) {
-                    scanner.close();
                     return choice;
                 } else {
                     System.out.println("Incorrect Input. Please enter a number from 1 - 4.");
@@ -98,7 +98,7 @@ public class Main {
 
             } catch (Exception e) {
                 System.out.println("Incorrect Input. Please enter a number from 1 - 4.");
-                scanner.nextLine();
+                // scanner.nextLine();
             }
         }
     }
