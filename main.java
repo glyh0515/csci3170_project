@@ -1,5 +1,5 @@
-    public static String dbAddress = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db60?autoReconnect=true&useSSL=false";
-    public static String dbUsername = "Group60";
+    public static String dbAddress = "jdbc:mysql://projgw.cse.cuhk.edu.hk:2633/db11?autoReconnect=true&useSSL=false";
+    public static String dbUsername = "Group11";
     public static String dbPassword = "CSCI3170";
 
     public static Connection connectToMySQL(){
