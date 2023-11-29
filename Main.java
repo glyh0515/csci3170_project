@@ -75,9 +75,8 @@ public class Main {
         System.out.println("3. Operations for manager");
         System.out.println("4. Exit this program");
         System.out.print("Enter your choice: ");
-
+        Scanner scanner = new Scanner(System.in);
         while (true) {
-            Scanner scanner = new Scanner(System.in);
             int choice = 0;
 
             try {
