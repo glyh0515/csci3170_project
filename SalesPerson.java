@@ -31,4 +31,12 @@ public class SalesPerson extends BaseModel {
             }
         }
     }
+
+    public void SearchPart(Connection con) throws SQLException{
+    
+    }
+    
+    public void PerformTransaction(Connection con) throws SQLException{
+    
+    }
 }
