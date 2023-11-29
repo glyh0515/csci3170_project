@@ -18,26 +18,32 @@ public class Administrator {
 			switch (choice) {
 				case 1:
 					try {
+						System.out.print("Processing...");
 						createAll();
+						System.out.println("Done! Database is intialized");
 					} catch (SQLException e) {
+						System.out.println("");
 						System.out.println(e);
 					}
 					break;
 				case 2:
 					try {
+						System.out.println("Processing...");
 						deleteAll();
+						System.out.println("Done! Database is removed");
 					} catch (Exception e) {
 						System.out.println(e);
 					}
 					break;
 				case 3:
+
+					break;
+				case 4:
 					try {
 						showContentOfTable();
 					} catch (SQLException e) {
 						System.out.println(e);
 					}
-					break;
-				case 4:
 					break;
 				case 5:
 					return;
@@ -62,7 +68,7 @@ public class Administrator {
 
 			try {
 				choice = scanner.nextInt();
-				// scanner.next();
+				scanner.nextLine();
 				System.out.println("");
 
 				if (choice >= 1 && choice <= 5) {
@@ -72,7 +78,7 @@ public class Administrator {
 				}
 
 			} catch (Exception e) {
-				// System.out.println("Incorrect Input. Please enter a number from 1 - 5.");
+				System.out.println("Incorrect Input. Please enter a number from 1 - 5.");
 				scanner.nextLine();
 			}
 		}
@@ -103,9 +109,7 @@ public class Administrator {
 
 	private void showContentOfTable() throws SQLException {
 		System.out.print("Which table would you like to show: ");
-		Scanner scanner = new Scanner(System.in);
 		String tableName = scanner.nextLine();
-		scanner.close();
 		System.out.println("Content of table " + tableName);
 		Statement stmt = connection.createStatement();
 		stmt.executeQuery(String.format("SELECT * FROM %s", tableName));

@@ -88,6 +88,7 @@ public class Main {
             System.out.print("Enter your choice: ");
             try {
                 choice = scanner.nextInt();
+                scanner.nextLine();
                 System.out.println("");
 
                 if (choice >= 1 && choice <= 4) {
@@ -98,7 +99,7 @@ public class Main {
 
             } catch (Exception e) {
                 System.out.println("Incorrect Input. Please enter a number from 1 - 4.");
-                // scanner.nextLine();
+                scanner.nextLine();
             }
         }
     }
