@@ -31,4 +31,20 @@ public class Manager extends BaseModel {
             }
         }
     }
+`
+    public void ListSalespersons(Connection con) throws SQLException{
+    
+    }
+    
+    public void CountTransaction(Connection con) throws SQLException{
+    
+    }
+    
+    public void ListManufacturers(Connection con) throws SQLException{
+    
+    }
+    
+    public void ShowNParts(Connection con) throws SQLException{
+    
+    }
 }
