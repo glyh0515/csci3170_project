@@ -21,8 +21,13 @@ public class Main {
             int choice = getValidChoiceFromMainMenu();
 
             switch (choice) {
-                case 0:
+                case 1:
 
+                    break;
+
+                case 2:
+                    break;
+                case 3:
                     break;
                 case 4:
                     end = true;
@@ -70,15 +75,16 @@ public class Main {
     public static int getValidChoiceFromMainMenu() {
 
         System.out.println("----Main Menu----");
+        System.out.println("What kinds of operation would you like to perform?");
         System.out.println("1. Operations for administrator");
         System.out.println("2. Operations for salesperson");
         System.out.println("3. Operations for manager");
         System.out.println("4. Exit this program");
-        System.out.print("Enter your choice: ");
+
         Scanner scanner = new Scanner(System.in);
         while (true) {
             int choice = 0;
-
+            System.out.print("Enter your choice: ");
             try {
                 choice = scanner.nextInt();
                 System.out.println("");
@@ -90,8 +96,9 @@ public class Main {
                     System.out.println("Incorrect Input. Please enter a number from 1 - 4.");
                 }
 
-            } catch (NumberFormatException e) {
+            } catch (Exception e) {
                 System.out.println("Incorrect Input. Please enter a number from 1 - 4.");
+                scanner.nextLine();
             }
         }
     }

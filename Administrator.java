@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.Scanner;
 
 public class Administrator {
 
@@ -6,6 +7,53 @@ public class Administrator {
 
         public Administrator(Connection connection) {
                 this.connection = connection;
+        }
+
+        public void showAdminstratorPanel() {
+                while (true) {
+                        int choice = getValidChoiceFromAdministrator();
+
+                        switch (choice) {
+                                case 1:
+
+                                        break;
+                                case 5:
+                                        return;
+                                default:
+                                        break;
+                        }
+                }
+        }
+
+        public int getValidChoiceFromAdministrator() {
+                System.out.println("----Operations for adminstrator menu----");
+                System.out.println("What kinds of operation would you like to perform?");
+                System.out.println("1. Create all tables");
+                System.out.println("2. Delete all tables");
+                System.out.println("3. Load from datafile");
+                System.out.println("4. Show content of a table");
+                System.out.println("5. Return to the main menu");
+
+                Scanner scanner = new Scanner(System.in);
+                while (true) {
+                        int choice = 0;
+                        System.out.print("Enter your choice: ");
+                        try {
+                                choice = scanner.nextInt();
+                                System.out.println("");
+
+                                if (choice >= 1 && choice <= 4) {
+                                        scanner.close();
+                                        return choice;
+                                } else {
+                                        System.out.println("Incorrect Input. Please enter a number from 1 - 5.");
+                                }
+
+                        } catch (Exception e) {
+                                System.out.println("Incorrect Input. Please enter a number from 1 - 5.");
+                                scanner.nextLine();
+                        }
+                }
         }
 
         public void createAll() throws SQLException {
