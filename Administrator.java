@@ -40,7 +40,11 @@ public class Administrator extends BaseModel {
 					}
 					break;
 				case 3:
-
+					try {
+						load();
+					} catch (SQLException e) {
+						System.out.println(e);
+					}
 					break;
 				case 4:
 					try {
@@ -74,6 +78,15 @@ public class Administrator extends BaseModel {
 		stmt.executeUpdate("DROP TABLE Salesperson");
 		stmt.executeUpdate("DROP TABLE Transaction");
 	}
+
+	private void load(Connection con) throws SQLException{
+        Statement stmt = con.createStatement();
+        stmt.execute("LOAD DATA INFILE 'category.txt' REPLACE INTO TABLE Category");
+		stmt.execute("LOAD DATA INFILE 'manufacturer.txt' REPLACE INTO TABLE Manufacturer");
+		stmt.execute("LOAD DATA INFILE 'part.txt' REPLACE INTO TABLE Part");
+		stmt.execute("LOAD DATA INFILE 'salesperson.txt' REPLACE INTO TABLE Salesperson");
+
+    }
 
 	private void showContentOfTable() throws SQLException {
 		System.out.print("Which table would you like to show: ");

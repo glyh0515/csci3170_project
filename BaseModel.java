@@ -9,7 +9,7 @@ public class BaseModel {
         this.scanner = scanner;
         this.connection = connection;
     }
-
+    
     /*
      * Get valid integer
      * 
