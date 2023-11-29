@@ -1,11 +1,11 @@
 import java.sql.*;
 
-public class Administrator extends BaseModel {
+public class Administrator {
 
         Connection connection = null;
 
         public Administrator(Connection connection) {
-                super(connection);
+                this.connection = connection;
         }
 
         public void createAll() throws SQLException {

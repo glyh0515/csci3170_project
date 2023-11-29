@@ -1,4 +1,5 @@
 import java.sql.*;
+import java.util.Scanner;
 
 public class Main {
 
@@ -9,15 +10,35 @@ public class Main {
     public static void main(String[] args) {
         Connection connection = connectToMySQL();
 
-        System.out.println("Welcome to sales system!");
+        System.out.println("Welcome to sales system!\n");
 
         Administrator admin = new Administrator(connection);
-        try {
-            admin.createAll();
-        } catch (SQLException e) {
-            System.out.println(e);
+        Manager manager = new Manager(connection);
+        SalesPerson salesPerson = new SalesPerson(connection);
+
+        boolean end = false;
+        while (!end) {
+            int choice = getValidChoiceFromMainMenu();
+
+            switch (choice) {
+                case 0:
+
+                    break;
+                case 4:
+                    end = true;
+                    break;
+                default:
+                    break;
+            }
         }
 
+        // try {
+        // admin.createAll();
+        // } catch (SQLException e) {
+        // System.out.println(e);
+        // }
+
+        System.out.println("System ends! Thank you.");
         disconnectFromMySQL(connection);
 
     }
@@ -40,6 +61,39 @@ public class Main {
         try {
             con.close();
         } catch (Exception e) {
+        }
+    }
+
+    /*
+     * @return choice in Integer
+     */
+    public static int getValidChoiceFromMainMenu() {
+
+        System.out.println("----Main Menu----");
+        System.out.println("1. Operations for administrator");
+        System.out.println("2. Operations for salesperson");
+        System.out.println("3. Operations for manager");
+        System.out.println("4. Exit this program");
+        System.out.print("Enter your choice: ");
+
+        while (true) {
+            Scanner scanner = new Scanner(System.in);
+            int choice = 0;
+
+            try {
+                choice = scanner.nextInt();
+                System.out.println("");
+
+                if (choice >= 1 && choice <= 4) {
+                    scanner.close();
+                    return choice;
+                } else {
+                    System.out.println("Incorrect Input. Please enter a number from 1 - 4.");
+                }
+
+            } catch (NumberFormatException e) {
+                System.out.println("Incorrect Input. Please enter a number from 1 - 4.");
+            }
         }
     }
 
