@@ -43,6 +43,8 @@ public class Manager extends BaseModel {
         System.out.println("1. By ascending order");
         System.out.println("2. By descending order");
         System.out.print("Choose the list ordering: ");
+        int choice = getValidChoice(1, 2);
+
     }
 
     public void CountTransaction() throws SQLException {

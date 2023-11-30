@@ -37,11 +37,13 @@ public class SalesPerson extends BaseModel {
         System.out.println("1. Part Name ");
         System.out.println("2. Manufacturer Name ");
         System.out.print("Choose the Search Criterion: ");
+        int choice = getValidChoice(1, 2);
         System.out.print("Type in the Search Keyword ");
         System.out.println("Choose ordering");
         System.out.println("1. By price, ascending order");
         System.out.println("2. By price, descending order");
         System.out.print("Choose the search criterion: ");
+        int order = getValidChoice(1, 2);
         /*
          * "SELECT * FROM Manufactuer M, Part P WHERE " + (searchCriterion == 1 ?
          * "P.PNAME = " : "P.MID = M.MID AND M.NAME = ") + keyword + "ORDERING BY " +
