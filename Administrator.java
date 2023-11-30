@@ -17,6 +17,7 @@ public class Administrator extends BaseModel {
 			System.out.println("3. Load from datafile");
 			System.out.println("4. Show content of a table");
 			System.out.println("5. Return to the main menu");
+			System.out.print("Enter your choice: ");
 			int choice = getValidChoice(1, 5);
 
 			switch (choice) {
