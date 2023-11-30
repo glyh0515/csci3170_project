@@ -17,6 +17,7 @@ public class SalesPerson extends BaseModel {
             System.out.println("3. Return to the main menu");
 
             int choice = getValidChoice(1, 3);
+
             switch (choice) {
                 case 1:
                     break;
