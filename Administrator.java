@@ -36,15 +36,23 @@ public class Administrator extends BaseModel {
 						deleteAll();
 						System.out.println("Done! Database is removed");
 					} catch (Exception e) {
+						System.out.println("");
 						System.out.println(e);
 					}
 					break;
 				case 3:
 					try {
-						load();
+						System.out.print("Type in the Source Data Folder Path: ");
+						String path = scanner.nextLine();
+						System.out.print("Processing...");
+						loadData(path);
+						System.out.println("Done! Data is inputted to database!");
+					} catch (SQLIntegrityConstraintViolationException e) {
+						System.out.println("Unable to load file to database!");
 					} catch (SQLException e) {
-						System.out.println(e);
+						System.out.println("Data file not found inside the given folder!");
 					}
+
 					break;
 				case 4:
 					try {
@@ -65,23 +73,23 @@ public class Administrator extends BaseModel {
 		Statement stmt = connection.createStatement();
 		// Category
 		stmt.executeUpdate(
-				"CREATE TABLE category(CID INT(1) UNSIGNED NOT NULL, CNAME CHAR(20) NOT NULL, PRIMARY KEY(CID))");
+				"CREATE TABLE category(cID INT(1) UNSIGNED NOT NULL, cName CHAR(20) NOT NULL, PRIMARY KEY(cID))");
 
 		// Manufacturer
 		stmt.executeUpdate(
-				"CREATE TABLE manufacturer(MID INT(2) UNSIGNED NOT NULL, MNAME CHAR(20) NOT NULL, MADDRESS CHAR(50) NOT NULL, MPHONENUM INT(8) UNSIGNED NOT NULL, PRIMARY KEY (MID))");
+				"CREATE TABLE manufacturer(mID INT(2) UNSIGNED NOT NULL, mName CHAR(20) NOT NULL, mAddress CHAR(50) NOT NULL, mPhoneNum INT(8) UNSIGNED NOT NULL, PRIMARY KEY (mID))");
 
 		// Part
 		stmt.executeUpdate(
-				"CREATE TABLE part(PID INT(3) UNSIGNED NOT NULL, PNAME CHAR(20) NOT NULL, PPRICE INT(5) UNSIGNED NOT NULL, MID INT(2) UNSIGNED NOT NULL, CID INT(1) UNSIGNED NOT NULL, PWAR INT(2) UNSIGNED NOT NULL, PQTY INT(2) UNSIGNED NOT NULL, PRIMARY KEY (PID), FOREIGN KEY (MID) REFERENCES manufacturer(MID), FOREIGN KEY (CID) REFERENCES category(CID))");
+				"CREATE TABLE part(pID INT(3) UNSIGNED NOT NULL, pName CHAR(20) NOT NULL, pPrice INT(5) UNSIGNED NOT NULL, mID INT(2) UNSIGNED NOT NULL, cID INT(1) UNSIGNED NOT NULL, pWarranty INT(2) UNSIGNED NOT NULL, pQuantity INT(2) UNSIGNED NOT NULL, PRIMARY KEY (pID), FOREIGN KEY (mID) REFERENCES manufacturer(mID), FOREIGN KEY (cID) REFERENCES category(cID))");
 
 		// Salesperson
 		stmt.executeUpdate(
-				"CREATE TABLE salesperson(SID INT(2) UNSIGNED NOT NULL, SNAME CHAR(20) NOT NULL, SADDRESS CHAR(50) NOT NULL, SPHONENUM INT(8) UNSIGNED NOT NULL, SEXPER INT(1) UNSIGNED NOT NULL, PRIMARY KEY (SID))");
+				"CREATE TABLE salesperson(sID INT(2) UNSIGNED NOT NULL, sName CHAR(20) NOT NULL, sAddress CHAR(50) NOT NULL, sPhoneNum INT(8) UNSIGNED NOT NULL, sExperience INT(1) UNSIGNED NOT NULL, PRIMARY KEY (sID))");
 
 		// Transaction
 		stmt.executeUpdate(
-				"CREATE TABLE transaction(TID INT(4) UNSIGNED NOT NULL, PID INT(3) UNSIGNED NOT NULL, SID INT(2) UNSIGNED NOT NULL, TDATE DATE, PRIMARY KEY (TID), FOREIGN KEY (PID) REFERENCES part(PID), FOREIGN KEY (SID) REFERENCES salesperson(SID))");
+				"CREATE TABLE transaction(tID INT(4) UNSIGNED NOT NULL, pID INT(3) UNSIGNED NOT NULL, sID INT(2) UNSIGNED NOT NULL, tDate DATE, PRIMARY KEY (tID), FOREIGN KEY (pID) REFERENCES part(pID), FOREIGN KEY (sID) REFERENCES salesperson(sID))");
 	}
 
 	private void deleteAll() throws SQLException {
@@ -93,13 +101,16 @@ public class Administrator extends BaseModel {
 		stmt.executeUpdate("DROP TABLE salesperson");
 	}
 
-	private void load() throws SQLException {
-		Statement stmt = connection.createStatement();
-		stmt.execute("LOAD DATA INFILE 'category.txt' REPLACE INTO TABLE category");
-		stmt.execute("LOAD DATA INFILE 'manufacturer.txt' REPLACE INTO TABLE manufacturer");
-		stmt.execute("LOAD DATA INFILE 'part.txt' REPLACE INTO TABLE part");
-		stmt.execute("LOAD DATA INFILE 'salesperson.txt' REPLACE INTO TABLE salesperson");
+	private void loadData(String folderPath) throws SQLException, SQLIntegrityConstraintViolationException {
 
+		Statement stmt = connection.createStatement();
+		stmt.execute(
+				String.format("LOAD DATA LOCAL INFILE './%s/category.txt' REPLACE INTO TABLE category", folderPath));
+		stmt.execute(String.format("LOAD DATA LOCAL INFILE './%s/manufacturer.txt' REPLACE INTO TABLE manufacturer",
+				folderPath));
+		stmt.execute(String.format("LOAD DATA LOCAL INFILE './%s/part.txt' REPLACE INTO TABLE part", folderPath));
+		stmt.execute(String.format("LOAD DATA LOCAL INFILE './%s/salesperson.txt' REPLACE INTO TABLE salesperson",
+				folderPath));
 	}
 
 	private void showContentOfTable() throws SQLException {
@@ -108,8 +119,45 @@ public class Administrator extends BaseModel {
 		System.out.println("Content of table " + tableName.toLowerCase());
 		Statement stmt = connection.createStatement();
 		ResultSet rs = stmt.executeQuery(String.format("SELECT * FROM %s", tableName.toLowerCase()));
-		while (rs.next()) {
 
+		switch (tableName.toLowerCase()) {
+			case "category":
+				System.out.println("| ID | Name |");
+				break;
+			case "part":
+				System.out.println("| pID | pName | pPrice | mID | cID | pQuantity | pWarranty |");
+				break;
+			case "manufacturer":
+				break;
+			case "salesperson":
+				break;
+			case "transaction":
+				break;
+			default:
+				System.out.println(String.format("No table named %s found", tableName.toLowerCase()));
+				return;
+		}
+
+		while (rs.next()) {
+			switch (tableName.toLowerCase()) {
+				case "category":
+					System.out.println(String.format("| %d | %s |", rs.getInt("cID"), rs.getString("cName")));
+					break;
+				case "part":
+					System.out.println(String.format("| %d | %s | %d | %d | %d | %d | %d |", rs.getInt("pID"),
+							rs.getString("pName"), rs.getInt("pPrice"), rs.getInt("mID"), rs.getInt("cID"),
+							rs.getInt("pQuantity"), rs.getInt("pWarranty")));
+					break;
+				case "manufacturer":
+					break;
+				case "salesperson":
+					break;
+				case "transaction":
+					break;
+				default:
+					System.out.println(String.format("No table named %s found", tableName.toLowerCase()));
+					return;
+			}
 		}
 	}
 }
