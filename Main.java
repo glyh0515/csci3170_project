@@ -17,8 +17,7 @@ public class Main {
         Manager manager = new Manager(connection, scanner);
         SalesPerson salesPerson = new SalesPerson(connection, scanner);
 
-        boolean end = false;
-        while (!end) {
+        while (true) {
             int choice = getValidChoiceFromMainMenu();
 
             switch (choice) {
@@ -27,26 +26,20 @@ public class Main {
                     break;
 
                 case 2:
+                    salesPerson.showSalesPersonPanel();
                     break;
                 case 3:
+                    manager.showManagerPanel();
                     break;
                 case 4:
-                    end = true;
-                    break;
+                    System.out.println("System ends! Thank you.");
+                    disconnectFromMySQL(connection);
+                    scanner.close();
+                    return;
                 default:
                     break;
             }
         }
-
-        // try {
-        // admin.createAll();
-        // } catch (SQLException e) {
-        // System.out.println(e);
-        // }
-
-        System.out.println("System ends! Thank you.");
-        disconnectFromMySQL(connection);
-        scanner.close();
 
     }
 
