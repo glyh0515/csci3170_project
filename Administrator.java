@@ -63,25 +63,35 @@ public class Administrator extends BaseModel {
 
 	private void createAll() throws SQLException {
 		Statement stmt = connection.createStatement();
+		// Category
 		stmt.executeUpdate(
 				"CREATE TABLE Category(CID INT(1) UNSIGNED NOT NULL, CNAME CHAR(20) NOT NULL, PRIMARY KEY(CID))");
+
+		// Manufacturer
 		stmt.executeUpdate(
 				"CREATE TABLE Manufacturer(MID INT(2) UNSIGNED NOT NULL, MNAME CHAR(20) NOT NULL, MADDRESS CHAR(50) NOT NULL, MPHONENUM INT(8) UNSIGNED NOT NULL, PRIMARY KEY (MID))");
+
+		// Part
 		stmt.executeUpdate(
 				"CREATE TABLE Part(PID INT(3) UNSIGNED NOT NULL, PNAME CHAR(20) NOT NULL, PPRICE INT(5) UNSIGNED NOT NULL, MID INT(2) UNSIGNED NOT NULL, CID INT(1) UNSIGNED NOT NULL, PWAR INT(2) UNSIGNED NOT NULL, PQTY INT(2) UNSIGNED NOT NULL, PRIMARY KEY (PID), FOREIGN KEY (MID) REFERENCES Manufacturer(MID), FOREIGN KEY (CID) REFERENCES Category(CID))");
+
+		// Salesperson
 		stmt.executeUpdate(
 				"CREATE TABLE Salesperson(SID INT(2) UNSIGNED NOT NULL, SNAME CHAR(20) NOT NULL, SADDRESS CHAR(50) NOT NULL, SPHONENUM INT(8) UNSIGNED NOT NULL, SEXPER INT(1) UNSIGNED NOT NULL, PRIMARY KEY (SID))");
+
+		// Transaction
 		stmt.executeUpdate(
 				"CREATE TABLE Transaction(TID INT(4) UNSIGNED NOT NULL, PID INT(3) UNSIGNED NOT NULL, SID INT(2) UNSIGNED NOT NULL, TDATE DATE, PRIMARY KEY (TID), FOREIGN KEY (PID) REFERENCES Part(PID), FOREIGN KEY (SID) REFERENCES Salesperson(SID))");
 	}
 
 	private void deleteAll() throws SQLException {
 		Statement stmt = connection.createStatement();
+		stmt.executeUpdate("DROP TABLE Transaction");
+		stmt.executeUpdate("DROP TABLE Part");
 		stmt.executeUpdate("DROP TABLE Category");
 		stmt.executeUpdate("DROP TABLE Manufacturer");
-		stmt.executeUpdate("DROP TABLE Part");
 		stmt.executeUpdate("DROP TABLE Salesperson");
-		stmt.executeUpdate("DROP TABLE Transaction");
+
 	}
 
 	private void load() throws SQLException {
