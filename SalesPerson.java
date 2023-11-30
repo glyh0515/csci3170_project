@@ -81,8 +81,41 @@ public class SalesPerson extends BaseModel {
 
     public void PerformTransaction() throws SQLException {
         System.out.print("Enter The Part ID: ");
-        int partID;
-        int quantity;
+        PreparedStatement stmtP = connection.prepareStatement("SELECT * FROM PART WHERE pID = ?");
+        PreparedStatement stmtS = connection.prepareStatement("SELECT * FROM SALESPERSON WHERE sID = ?");
+        while(true){
+            int partID = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("");
+            stmtP.setString(1, partID);
+            ResultSet rs = stmtP.executeQuery();
+            if (rs.getInt(pQuantity) > 0){
+                int quantity = rs.getInt(pQuantity);
+                System.out.print("Enter The Salesperson ID: ");
+                while(true){
+                    int salesID = scanner.nextInt();
+                    scanner.nextLine();
+                    System.out.println("");
+                    stmtS.setString(1, salesID);
+                    rs = stmtS.executeQuery();
+                    if (rs.next()){
+
+                    }
+                    else
+                        System.out.print("Not such salesperson, please enter again: ");
+                }
+            }
+            else if (rs.getInt(pQuantity) == 0)
+                System.out.print("The part cannot be sold.");
+                return;
+            else
+                System.out.print("Not such product, please enter again: ");
+        }
+         
+            
+
+
+        
         /* "SELECT pQuantity from part WHERE pID = " + partID */
         System.out.println("The part cannot be sold."); // if quanitity = 0
         System.out.print("Enter The Salesperson ID: ");
