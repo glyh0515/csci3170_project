@@ -45,9 +45,9 @@ public class SalesPerson extends BaseModel {
         System.out.print("Choose the search criterion: ");
         int order = getValidChoice(1, 2);
         /*
-         * "SELECT * FROM manufactuer M, part P WHERE " 
-         * + (searchCriterion == 1 ? "P.pName = " : "P.mID =  M.mID AND M.mName = ") 
-         * + keyword + " ORDER BY P.pPrice" 
+         * "SELECT * FROM manufactuer M, part P WHERE "
+         * + (searchCriterion == 1 ? "P.pName = " : "P.mID =  M.mID AND M.mName = ")
+         * + keyword + " ORDER BY P.pPrice"
          * + (order == 1 ? "ASC" : "DESC") + ";"
          */
         return;
