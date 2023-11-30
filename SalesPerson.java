@@ -49,31 +49,34 @@ public class SalesPerson extends BaseModel {
         int order = getValidChoice(1, 2);
 
         PreparedStatement stmt;
+        ResultSet rs;
+        String sql = null;
+        System.out.println("| ID | Name | Manufacturer | Category | Quantity | Warranty | Price |");
         switch (choice) {
             case 1:
                 switch (order) {
                 case 1:
-                    stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice");
+                    sql = "SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice";
                     break;
                 case 2:
-                    stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice DESC");
+                    sql = "SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice DESC";
                     break;
                 }
                 break;
             case 2:
                 switch (order) {
                 case 1:
-                    stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice");
+                    sql = "SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice";
                     break;
                 case 2:
-                    stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice DESC");
+                    sql = "SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice DESC";
                     break;
                 }
                 break;
-        }
+        }        
+        stmt = connection.prepareStatement(sql);
         stmt.setString(1, "%" + kword + "%");
-        ResultSet rs = stmt.executeQuery();
-        System.out.println("| ID | Name | Manufacturer | Category | Quantity | Warranty | Price |");
+        rs = stmt.executeQuery();
         while (rs.next()) {
             System.out.println(String.format("| %d | %s | %s | %s | %d | %d | %d |", rs.getInt("pID"), rs.getString("pName"), rs.getString("mName"), rs.getString("cName"), rs.getInt("pQuantity"), rs.getInt("pWarranty"), rs.getInt("pPrice")));
         }
