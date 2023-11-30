@@ -15,7 +15,7 @@ public class SalesPerson extends BaseModel {
             System.out.println("1. Search for parts");
             System.out.println("2. Sell a part");
             System.out.println("3. Return to the main menu");
-
+            System.out.print("Enter your choice: ");
             int choice = getValidChoice(1, 3);
 
             switch (choice) {
@@ -37,17 +37,45 @@ public class SalesPerson extends BaseModel {
         System.out.println("1. Part Name ");
         System.out.println("2. Manufacturer Name ");
         System.out.print("Choose the Search Criterion: ");
+        int choice = getValidChoice(1, 2);
+        
         System.out.print("Type in the Search Keyword ");
+        String kword = scanner.nextLine();
+        
         System.out.println("Choose ordering");
         System.out.println("1. By price, ascending order");
         System.out.println("2. By price, descending order");
         System.out.print("Choose the search criterion: ");
-        /*
-         * "SELECT * FROM manufactuer M, part P WHERE " 
-         * + (searchCriterion == 1 ? "P.pName = " : "P.mID =  M.mID AND M.mName = ") 
-         * + keyword + " ORDER BY P.pPrice" 
-         * + (order == 1 ? "ASC" : "DESC") + ";"
-         */
+        int order = getValidChoice(1, 2);
+
+        switch (choice) {
+            case 1:
+                switch (order) {
+                case 1:
+                    PreparedStatement stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice");
+                    break;
+                case 2:
+                    PreparedStatement stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice DESC");
+                    break;
+                }
+                break;
+            case 2:
+                switch (order) {
+                case 1:
+                    PreparedStatement stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice");
+                    break;
+                case 2:
+                    PreparedStatement stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice DESC");
+                    break;
+                }
+                break;
+        }
+        stmt.setString(1, "%" + kword + "%");
+        ResultSet rs = stmt.executeQuery();
+        System.out.println("| ID | Name | Manufacturer | Category | Quantity | Warranty | Price |");
+        while (rs.next()) {
+            System.out.println(String.format("| %d | %s | %s | %s | %d | %d | %d |", rs.getInt("pID"), rs.getString("pName"), rs.getString("mName"), rs.getString("cName"), rs.getInt("pQuantity"), rs.getInt("pWarranty"), rs.getInt("pPrice")));
+        }
         return;
     }
 

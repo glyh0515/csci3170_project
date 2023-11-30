@@ -20,7 +20,6 @@ public class BaseModel {
     public int getValidChoice(int start, int end) {
         while (true) {
             int choice = 0;
-            System.out.print("Enter your choice: ");
             try {
                 choice = scanner.nextInt();
                 scanner.nextLine();
