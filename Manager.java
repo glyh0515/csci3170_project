@@ -37,23 +37,23 @@ public class Manager extends BaseModel {
         }
     }
 
-    public void ListSalespersons(Connection con) throws SQLException{
+    public void ListSalespersons() throws SQLException {
         System.out.println("Choose ordering:");
         System.out.println("1. By ascending order");
         System.out.println("2. By descending order");
         System.out.print("Choose the list ordering: ");
     }
-    
-    public void CountTransaction(Connection con) throws SQLException{
+
+    public void CountTransaction() throws SQLException {
         System.out.print("Type in the lower bound for years of experience: ");
         System.out.print("Type in the upper bound for years of experience: ");
     }
-    
-    public void ListManufacturers(Connection con) throws SQLException{
-    
+
+    public void ListManufacturers() throws SQLException {
+
     }
-    
-    public void ShowNParts(Connection con) throws SQLException{
+
+    public void ShowNParts() throws SQLException {
         System.out.print("Type in the number of parts: ");
     }
 }
