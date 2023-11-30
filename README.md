@@ -39,6 +39,6 @@ Example
 3. Run the following command to execute the code
 
 <pre>
-javac Administrator.java Main.java Manager.java SalesPerson.java BaseModel.java
-java -classpath ./mysql-jdbc.jar:./ Main   
+  javac Administrator.java Main.java Manager.java SalesPerson.java BaseModel.java
+  java -classpath ./mysql-jdbc.jar:./ Main   
 </pre>
