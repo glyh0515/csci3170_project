@@ -30,7 +30,7 @@ Example
   scp ./CSCI3170proj/sample_data/* xxxx4@linux9.cse.cuhk.edu.hk:/uac/y22/xxxx4/csci3170proj/sample_data
 </pre>
 2. ssh to CSE Linux Server and cd to the appropriate folder
-<br />
+
 Example
 <pre>
   ssh xxxx4@linux9.cse.cuhk.edu.hk
