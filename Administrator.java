@@ -105,9 +105,9 @@ public class Administrator extends BaseModel {
 	private void showContentOfTable() throws SQLException {
 		System.out.print("Which table would you like to show: ");
 		String tableName = scanner.nextLine();
-		System.out.println("Content of table " + tableName);
+		System.out.println("Content of table " + tableName.toLowerCase());
 		Statement stmt = connection.createStatement();
-		ResultSet rs = stmt.executeQuery(String.format("SELECT * FROM %s", tableName));
+		ResultSet rs = stmt.executeQuery(String.format("SELECT * FROM %s", tableName.toLowerCase()));
 		while (rs.next()) {
 
 		}
