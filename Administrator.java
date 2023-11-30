@@ -89,7 +89,7 @@ public class Administrator extends BaseModel {
 
 		// Transaction
 		stmt.executeUpdate(
-				"CREATE TABLE transaction(tID INT(4) UNSIGNED NOT NULL, pID INT(3) UNSIGNED NOT NULL, sID INT(2) UNSIGNED NOT NULL, tDate DATE, PRIMARY KEY (tID), FOREIGN KEY (pID) REFERENCES part(pID), FOREIGN KEY (sID) REFERENCES salesperson(sID))");
+				"CREATE TABLE transaction(tID INT(4) UNSIGNED NOT NULL, pID INT(3) UNSIGNED NOT NULL, sID INT(2) UNSIGNED NOT NULL, tDate CHAR(10), PRIMARY KEY (tID), FOREIGN KEY (pID) REFERENCES part(pID), FOREIGN KEY (sID) REFERENCES salesperson(sID))");
 	}
 
 	private void deleteAll() throws SQLException {
@@ -110,6 +110,8 @@ public class Administrator extends BaseModel {
 				folderPath));
 		stmt.execute(String.format("LOAD DATA LOCAL INFILE './%s/part.txt' REPLACE INTO TABLE part", folderPath));
 		stmt.execute(String.format("LOAD DATA LOCAL INFILE './%s/salesperson.txt' REPLACE INTO TABLE salesperson",
+				folderPath));
+		stmt.execute(String.format("LOAD DATA LOCAL INFILE './%s/transaction.txt' REPLACE INTO TABLE transaction",
 				folderPath));
 	}
 
@@ -132,6 +134,7 @@ public class Administrator extends BaseModel {
 			case "salesperson":
 				break;
 			case "transaction":
+			    System.out.println("| tID | pID | sID | tDate ");
 				break;
 			default:
 				System.out.println(String.format("No table named %s found", tableName.toLowerCase()));
@@ -153,6 +156,7 @@ public class Administrator extends BaseModel {
 				case "salesperson":
 					break;
 				case "transaction":
+				    System.out.println(String.format("| %d | %d | %d | %s |", rs.getInt("tID"), rs.getInt("pID"), rs.getInt("sID"), rs.getString("tDate")));
 					break;
 				default:
 					System.out.println(String.format("No table named %s found", tableName.toLowerCase()));

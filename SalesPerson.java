@@ -43,14 +43,21 @@ public class SalesPerson extends BaseModel {
         System.out.println("2. By price, descending order");
         System.out.print("Choose the search criterion: ");
         /*
-         * "SELECT * FROM Manufactuer M, Part P WHERE " + (searchCriterion == 1 ?
-         * "P.PNAME = " : "P.MID = M.MID AND M.NAME = ") + keyword + "ORDERING BY " +
-         * (order == 1 ? "ASC" : "DESC") + ";"
+         * "SELECT * FROM manufactuer M, part P WHERE " 
+         * + (searchCriterion == 1 ? "P.pName = " : "P.mID =  M.mID AND M.mName = ") 
+         * + keyword + " ORDER BY P.pPrice" 
+         * + (order == 1 ? "ASC" : "DESC") + ";"
          */
+        return;
     }
 
     public void PerformTransaction() throws SQLException {
         System.out.print("Enter The Part ID: ");
+        int partID;
+        int quantity;
+        /* "SELECT pQuantity from part WHERE pID = " + partID */
+        System.out.println("The part cannot be sold."); // if quanitity = 0
         System.out.print("Enter The Salesperson ID: ");
+        return;
     }
 }
