@@ -10,7 +10,7 @@ public class Administrator extends BaseModel {
 	public void showAdminstratorPanel() {
 		while (true) {
 
-			System.out.println("----Operations for adminstrator menu----");
+			System.out.println("----Operations for Adminstrator Menu----");
 			System.out.println("What kinds of operation would you like to perform?");
 			System.out.println("1. Create all tables");
 			System.out.println("2. Delete all tables");
@@ -119,7 +119,7 @@ public class Administrator extends BaseModel {
 	private void showContentOfTable() throws SQLException {
 		System.out.print("Which table would you like to show: ");
 		String tableName = scanner.nextLine();
-		System.out.println("Content of table " + tableName.toLowerCase());
+		System.out.println("Content of table " + tableName.toLowerCase() + ":");
 		Statement stmt = connection.createStatement();
 		ResultSet rs = stmt.executeQuery(String.format("SELECT * FROM %s", tableName.toLowerCase()));
 
@@ -131,11 +131,13 @@ public class Administrator extends BaseModel {
 				System.out.println("| pID | pName | pPrice | mID | cID | pQuantity | pWarranty |");
 				break;
 			case "manufacturer":
+				System.out.println("| ID | Name | Address | Phone |");
 				break;
 			case "salesperson":
+				System.out.println("| ID | Name | Address | Phone | Experience |");
 				break;
 			case "transaction":
-			    System.out.println("| tID | pID | sID | tDate ");
+				System.out.println("| tID | pID | sID | tDate ");
 				break;
 			default:
 				System.out.println(String.format("No table named %s found", tableName.toLowerCase()));
@@ -153,16 +155,24 @@ public class Administrator extends BaseModel {
 							rs.getInt("pQuantity"), rs.getInt("pWarranty")));
 					break;
 				case "manufacturer":
+					System.out.println(String.format("| %d | %s | %s | %d |", rs.getInt("mID"), rs.getString("mName"),
+							rs.getString("mAddress"), rs.getInt("mPhoneNum")));
 					break;
 				case "salesperson":
+					System.out.println(
+							String.format("| %d | %s | %s | %d | %d |", rs.getInt("sID"), rs.getString("sName"),
+									rs.getString("sAddress"), rs.getInt("sPhoneNum"), rs.getInt("sExperience")));
 					break;
 				case "transaction":
-				    System.out.println(String.format("| %d | %d | %d | %s |", rs.getInt("tID"), rs.getInt("pID"), rs.getInt("sID"), rs.getString("tDate")));
+					System.out.println(String.format("| %d | %d | %d | %s |", rs.getInt("tID"), rs.getInt("pID"),
+							rs.getInt("sID"), rs.getString("tDate")));
 					break;
 				default:
 					System.out.println(String.format("No table named %s found", tableName.toLowerCase()));
 					return;
 			}
 		}
+
+		System.out.println("End of Query\n");
 	}
 }
