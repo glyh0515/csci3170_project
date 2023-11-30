@@ -80,12 +80,48 @@ public class SalesPerson extends BaseModel {
     }
 
     public void PerformTransaction() throws SQLException {
-        System.out.print("Enter The Part ID: ");
-        int partID;
-        int quantity;
-        /* "SELECT pQuantity from part WHERE pID = " + partID */
-        System.out.println("The part cannot be sold."); // if quanitity = 0
-        System.out.print("Enter The Salesperson ID: ");
+        do{
+            System.out.print("Enter The Part ID: ");
+            int partID = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("");
+            PreparedStatement stmt = connection.prepareStatement("SELECT * FROM PART WHERE pID = ?");
+            stmt.setString(1, partID);
+            ResultSet rs = stmt.executeQuery();
+        }while(rs.next());
+
+        int quantity = rs.getInt(pQuantity);
+        String prodName = rs.getString(pName);
+        
+        do{
+            System.out.print("Enter The Salesperson ID: ");
+            int salesID = scanner.nextInt();
+            scanner.nextLine();
+            System.out.println("");
+            stmt = connection.prepareStatement("SELECT * FROM SALESPERSON WHERE sID = ?");
+            stmt.setString(1, salesID);
+            rs = stmt.executeQuery();
+        }while(rs.next());
+
+        if (rs.getInt(pQuantity) > 0){
+            stmt = connection.prepareStatement("UPDATE part SET pQuantity = (pQuantity - 1) WHERE pID = ?");
+            stmt.setString(1, partID);
+            rs = stmt.executeUpdate();
+            System.out.print("Product: " + prodName + "(id: " + partID + ") Remaining Quantity: " + quantity);
+
+            stmt = connection.prepareStatement("SELECT MAX(tID) AS MAX FROM transaction");
+            rs = stmt.executeUpdate();
+            int tid = rs.getInt(MAX) + 1;
+
+            stmt = connection.prepareStatement("INSERT INTO transaction VALUES (?, ?, ?, CURDATE())");
+            stmt.setString(1, tID);
+            stmt.setString(2, partID);
+            stmt.setString(3, salesID);
+            rs = stmt.executeUpdate();
+        }
+        else{
+            System.out.print("The part cannot be sold.");
+        }
         return;
     }
 }
