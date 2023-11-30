@@ -15,7 +15,7 @@ public class SalesPerson extends BaseModel {
             System.out.println("1. Search for parts");
             System.out.println("2. Sell a part");
             System.out.println("3. Return to the main menu");
-
+            System.out.print("Enter your choice: ");
             int choice = getValidChoice(1, 3);
 
             switch (choice) {

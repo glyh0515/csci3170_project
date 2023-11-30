@@ -18,6 +18,7 @@ public class Manager extends BaseModel {
             System.out.println("3. Show the total sales value of each manufacturer");
             System.out.println("4. Show the N most popular part");
             System.out.println("5. Return to the main menu");
+            System.out.print("Enter your choice: ");
             int choice = getValidChoice(1, 5);
 
             switch (choice) {
