@@ -48,24 +48,25 @@ public class SalesPerson extends BaseModel {
         System.out.print("Choose the search criterion: ");
         int order = getValidChoice(1, 2);
 
+        PreparedStatement stmt;
         switch (choice) {
             case 1:
                 switch (order) {
                 case 1:
-                    PreparedStatement stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice");
+                    stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice");
                     break;
                 case 2:
-                    PreparedStatement stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice DESC");
+                    stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice DESC");
                     break;
                 }
                 break;
             case 2:
                 switch (order) {
                 case 1:
-                    PreparedStatement stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice");
+                    stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice");
                     break;
                 case 2:
-                    PreparedStatement stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice DESC");
+                    stmt = connection.prepareStatement("SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice DESC");
                     break;
                 }
                 break;
@@ -86,12 +87,12 @@ public class SalesPerson extends BaseModel {
             scanner.nextLine();
             System.out.println("");
             PreparedStatement stmt = connection.prepareStatement("SELECT * FROM PART WHERE pID = ?");
-            stmt.setString(1, partID);
+            stmt.setInt(1, partID);
             ResultSet rs = stmt.executeQuery();
         }while(rs.next());
 
-        int quantity = rs.getInt(pQuantity);
-        String prodName = rs.getString(pName);
+        int quantity = rs.getInt("pQuantity");
+        String prodName = rs.getString("pName");
         
         do{
             System.out.print("Enter The Salesperson ID: ");
@@ -99,24 +100,24 @@ public class SalesPerson extends BaseModel {
             scanner.nextLine();
             System.out.println("");
             stmt = connection.prepareStatement("SELECT * FROM SALESPERSON WHERE sID = ?");
-            stmt.setString(1, salesID);
+            stmt.setInt(1, salesID);
             rs = stmt.executeQuery();
         }while(rs.next());
 
-        if (rs.getInt(pQuantity) > 0){
+        if (rs.getInt("pQuantity") > 0){
             stmt = connection.prepareStatement("UPDATE part SET pQuantity = (pQuantity - 1) WHERE pID = ?");
-            stmt.setString(1, partID);
+            stmt.setInt(1, partID);
             rs = stmt.executeUpdate();
             System.out.print("Product: " + prodName + "(id: " + partID + ") Remaining Quantity: " + quantity);
 
             stmt = connection.prepareStatement("SELECT MAX(tID) AS MAX FROM transaction");
             rs = stmt.executeUpdate();
-            int tid = rs.getInt(MAX) + 1;
+            int tid = rs.getInt("MAX") + 1;
 
             stmt = connection.prepareStatement("INSERT INTO transaction VALUES (?, ?, ?, CURDATE())");
-            stmt.setString(1, tID);
-            stmt.setString(2, partID);
-            stmt.setString(3, salesID);
+            stmt.setInt(1, tID);
+            stmt.setInt(2, partID);
+            stmt.setInt(3, salesID);
             rs = stmt.executeUpdate();
         }
         else{
