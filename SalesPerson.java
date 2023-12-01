@@ -20,8 +20,20 @@ public class SalesPerson extends BaseModel {
 
             switch (choice) {
                 case 1:
+                    try {
+                        SearchPart();
+                    } catch (SQLException e) {
+                        System.out.println("");
+                        System.out.println(e);
+                    }
                     break;
                 case 2:
+                    try {
+                        PerformTransaction();
+                    } catch (SQLException e) {
+                        System.out.println("");
+                        System.out.println(e);
+                    }
                     break;
                 case 3:
                     return;
