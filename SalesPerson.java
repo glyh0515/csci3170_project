@@ -88,7 +88,7 @@ public class SalesPerson extends BaseModel {
         stmt.setString(1, "%" + kword + "%");
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-            System.out.println(String.format("| %d | %s | %s | %s | %d | %d | %d |", rs.getInt("pID"), rs.getString("pName"), rs.getString("mName"), rs.getString("cName"), rs.getInt("pQuantity"), rs.getInt("pWarranty"), rs.getInt("pPrice")));
+            System.out.println(String.format("| " + rs.getInt("pID") + " | " +  rs.getString("pName") + " | " + rs.getString("mName") + " | " + rs.getString("cName") +" | " + rs.getInt("pQuantity") + " | " + rs.getInt("pWarranty") + " | " + rs.getInt("pPrice") + " |"));
         }
         return;
     }
