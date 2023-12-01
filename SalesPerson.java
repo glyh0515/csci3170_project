@@ -134,6 +134,7 @@ public class SalesPerson extends BaseModel {
         }while(!idExists);
 
         if (quantity > 0){
+            quantity = quantity - 1;
             stmt = connection.prepareStatement("UPDATE part SET pQuantity = (pQuantity - 1) WHERE pID = ?");
             stmt.setInt(1, partID);
             stmt.executeUpdate();
