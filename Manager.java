@@ -73,6 +73,7 @@ public class Manager extends BaseModel {
             System.out.println(String.format("| %d | %s | %d | %d |", rs.getInt("sID"), rs.getString("sName"),
                     rs.getInt("sPhoneNum"), rs.getInt("sExperience")));
         }
+        System.out.println("End of Query\n");
     }
 
     public void CountTransaction() throws SQLException {
@@ -89,6 +90,7 @@ public class Manager extends BaseModel {
             System.out.println(String.format("| %d | %s | %d | %d", rs.getInt("S.sID"), rs.getString("S.sName"),
                     rs.getInt("S.sExperience"), rs.getInt("SALE_TRANSACTION")));
         }
+        System.out.println("End of Query\n");
         return;
     }
 
@@ -101,6 +103,7 @@ public class Manager extends BaseModel {
             System.out.println(String.format("| %d | %s | %d |", rs.getInt("M.mID"), rs.getString("M.mName"),
                     rs.getInt("TOTAL_SALES_VALUE")));
         }
+        System.out.println("End of Query\n");
         return;
     }
 
@@ -116,6 +119,7 @@ public class Manager extends BaseModel {
             System.out.println(String.format("| %d | %s | %d |", rs.getInt("P.pId"), rs.getString("P.pName"),
                     rs.getInt("TOTAL_TRANSACTION")));
         }
+        System.out.println("End of Query\n");
         return;
     }
 }
