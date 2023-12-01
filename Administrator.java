@@ -49,8 +49,10 @@ public class Administrator extends BaseModel {
 						loadData(path);
 						System.out.println("Done! Data is inputted to database!");
 					} catch (SQLIntegrityConstraintViolationException e) {
+						System.out.println(e);
 						System.out.println("Unable to load file to database!");
 					} catch (SQLException e) {
+						System.out.println(e);
 						System.out.println("Data file not found inside the given folder!");
 					}
 
@@ -112,8 +114,8 @@ public class Administrator extends BaseModel {
 		stmt.execute(String.format("LOAD DATA LOCAL INFILE './%s/part.txt' REPLACE INTO TABLE part", folderPath));
 		stmt.execute(String.format("LOAD DATA LOCAL INFILE './%s/salesperson.txt' REPLACE INTO TABLE salesperson",
 				folderPath));
-		stmt.execute(String.format("LOAD DATA LOCAL INFILE './%s/transaction.txt' REPLACE INTO TABLE transaction (tID, pID, sID, @date) SET tDate = STR_TO_DATE(@date, '%%d/%%m/%%Y'))",
-				folderPath));
+		stmt.execute("LOAD DATA LOCAL INFILE './" + folderPath
+				+ "/transaction.txt' REPLACE INTO TABLE transaction (tID, pID, sID, @date) SET tDate = STR_TO_DATE(@date, '%d/%m/%Y')");
 	}
 
 	private void showContentOfTable() throws SQLException {
