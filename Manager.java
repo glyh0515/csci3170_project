@@ -10,7 +10,7 @@ public class Manager extends BaseModel {
     public void showManagerPanel() {
         while (true) {
 
-            System.out.println("----Operations for adminstrator menu----");
+            System.out.println("----Operations for manager menu----");
             System.out.println("What kinds of operation would you like to perform?");
             System.out.println("1. List all salespersons");
             System.out.println(

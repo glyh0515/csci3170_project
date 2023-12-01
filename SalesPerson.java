@@ -10,7 +10,7 @@ public class SalesPerson extends BaseModel {
     public void showSalesPersonPanel() {
         while (true) {
 
-            System.out.println("----Operations for adminstrator menu----");
+            System.out.println("----Operations for salesperson menu----");
             System.out.println("What kinds of operation would you like to perform?");
             System.out.println("1. Search for parts");
             System.out.println("2. Sell a part");

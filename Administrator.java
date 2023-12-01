@@ -137,7 +137,7 @@ public class Administrator extends BaseModel {
 				System.out.println("| sID | sName | sAddress | sPhoneNum | sExperience |");
 				break;
 			case "transaction":
-				System.out.println("| tID | pID | sID | tDate ");
+				System.out.println("| tID | pID | sID | tDate |");
 				break;
 			default:
 				System.out.println(String.format("No table named %s found", tableName.toLowerCase()));
