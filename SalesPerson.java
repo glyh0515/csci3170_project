@@ -97,6 +97,7 @@ public class SalesPerson extends BaseModel {
         ResultSet rs;
         PreparedStatement stmt;
         int partID, salesID;
+        boolean idExists = false;
         do{
             System.out.print("Enter The Part ID: ");
             partID = scanner.nextInt();
@@ -105,11 +106,17 @@ public class SalesPerson extends BaseModel {
             stmt = connection.prepareStatement("SELECT * FROM part WHERE pID = ?");
             stmt.setInt(1, partID);
             rs = stmt.executeQuery();
-        }while(rs.next());
+            if (rs.next()) {
+                idExists = true;
+            } else {
+                System.out.println("The ID you entered does not exist in the table. Please try again.");
+            }
+        }while(!idExists);
 
         int quantity = rs.getInt("pQuantity");
         String prodName = rs.getString("pName");
-        
+        idExists = false;
+
         do{
             System.out.print("Enter The Salesperson ID: ");
             salesID = scanner.nextInt();
@@ -118,7 +125,12 @@ public class SalesPerson extends BaseModel {
             stmt = connection.prepareStatement("SELECT * FROM SALESPERSON WHERE sID = ?");
             stmt.setInt(1, salesID);
             rs = stmt.executeQuery();
-        }while(rs.next());
+            if (rs.next()) {
+                idExists = true;
+            } else {
+                System.out.println("The ID you entered does not exist in the table. Please try again.");
+            }
+        }while(!idExists);
 
         if (rs.getInt("pQuantity") > 0){
             stmt = connection.prepareStatement("UPDATE part SET pQuantity = (pQuantity - 1) WHERE pID = ?");
