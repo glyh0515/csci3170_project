@@ -125,16 +125,16 @@ public class Administrator extends BaseModel {
 
 		switch (tableName.toLowerCase()) {
 			case "category":
-				System.out.println("| ID | Name |");
+				System.out.println("| cID | cName |");
 				break;
 			case "part":
 				System.out.println("| pID | pName | pPrice | mID | cID | pQuantity | pWarranty |");
 				break;
 			case "manufacturer":
-				System.out.println("| ID | Name | Address | Phone |");
+				System.out.println("| mID | mName | mAddress | mPhoneNum |");
 				break;
 			case "salesperson":
-				System.out.println("| ID | Name | Address | Phone | Experience |");
+				System.out.println("| sID | sName | sAddress | sPhoneNum | sExperience |");
 				break;
 			case "transaction":
 				System.out.println("| tID | pID | sID | tDate ");
