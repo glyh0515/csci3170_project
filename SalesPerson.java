@@ -68,29 +68,43 @@ public class SalesPerson extends BaseModel {
             case 1:
                 switch (order) {
                 case 1:
-                    sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice";
+                    stmt = connection.prepareStatement("SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice");
+                    stmt.setString(1, "%" + kword + "%");
+                    rs = stmt.executeQuery();
+                    while (rs.next()) {
+                        System.out.println(String.format("| %d | %s | %s | %s | %d | %d | %d |", rs.getInt("pID"), rs.getString("pName"), rs.getString("mName"), rs.getString("cName"), rs.getInt("pQuantity"), rs.getInt("pWarranty"), rs.getInt("pPrice")));
+                    }
                     break;
                 case 2:
-                    sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice DESC";
+                    stmt = connection.prepareStatement("SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice DESC");
+                    stmt.setString(1, "%" + kword + "%");
+                    rs = stmt.executeQuery();
+                    while (rs.next()) {
+                        System.out.println(String.format("| %d | %s | %s | %s | %d | %d | %d |", rs.getInt("pID"), rs.getString("pName"), rs.getString("mName"), rs.getString("cName"), rs.getInt("pQuantity"), rs.getInt("pWarranty"), rs.getInt("pPrice")));
+                    }
                     break;
                 }
                 break;
             case 2:
                 switch (order) {
                 case 1:
-                    sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice";
+                    stmt = connection.prepareStatement("SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice");
+                    stmt.setString(1, "%" + kword + "%");
+                    rs = stmt.executeQuery();
+                    while (rs.next()) {
+                        System.out.println(String.format("| %d | %s | %s | %s | %d | %d | %d |", rs.getInt("pID"), rs.getString("pName"), rs.getString("mName"), rs.getString("cName"), rs.getInt("pQuantity"), rs.getInt("pWarranty"), rs.getInt("pPrice")));
+                    }
                     break;
                 case 2:
-                    sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice DESC";
+                    stmt = connection.prepareStatement("SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice DESC");
+                    stmt.setString(1, "%" + kword + "%");
+                    rs = stmt.executeQuery();
+                    while (rs.next()) {
+                        System.out.println(String.format("| %d | %s | %s | %s | %d | %d | %d |", rs.getInt("pID"), rs.getString("pName"), rs.getString("mName"), rs.getString("cName"), rs.getInt("pQuantity"), rs.getInt("pWarranty"), rs.getInt("pPrice")));
+                    }
                     break;
                 }
                 break;
-        }        
-        stmt = connection.prepareStatement(sql);
-        stmt.setString(1, "%" + kword + "%");
-        rs = stmt.executeQuery();
-        while (rs.next()) {
-            System.out.println(String.format("| %d | %s | %s | %s | %d | %d | %d |", rs.getInt("pID"), rs.getString("pName"), rs.getString("mName"), rs.getString("cName"), rs.getInt("pQuantity"), rs.getInt("pWarranty"), rs.getInt("pPrice")));
         }
         return;
     }
