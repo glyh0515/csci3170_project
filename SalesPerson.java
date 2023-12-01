@@ -96,8 +96,9 @@ public class SalesPerson extends BaseModel {
     public void PerformTransaction() throws SQLException {
         ResultSet rs;
         PreparedStatement stmt;
-        int partID, salesID;
+        int partID, salesID, quantity = 0, tid = 0;
         boolean idExists = false;
+        String prodName = null;
         do{
             System.out.print("Enter The Part ID: ");
             partID = scanner.nextInt();
@@ -108,13 +109,13 @@ public class SalesPerson extends BaseModel {
             rs = stmt.executeQuery();
             if (rs.next()) {
                 idExists = true;
+                quantity = rs.getInt("pQuantity");
+                prodName = rs.getString("pName");
             } else {
                 System.out.println("The ID you entered does not exist in the table. Please try again.");
             }
         }while(!idExists);
 
-        int quantity = rs.getInt("pQuantity");
-        String prodName = rs.getString("pName");
         idExists = false;
 
         do{
@@ -122,7 +123,7 @@ public class SalesPerson extends BaseModel {
             salesID = scanner.nextInt();
             scanner.nextLine();
             System.out.println("");
-            stmt = connection.prepareStatement("SELECT * FROM SALESPERSON WHERE sID = ?");
+            stmt = connection.prepareStatement("SELECT * FROM salesperson WHERE sID = ?");
             stmt.setInt(1, salesID);
             rs = stmt.executeQuery();
             if (rs.next()) {
@@ -132,15 +133,16 @@ public class SalesPerson extends BaseModel {
             }
         }while(!idExists);
 
-        if (rs.getInt("pQuantity") > 0){
+        if (quantity > 0){
             stmt = connection.prepareStatement("UPDATE part SET pQuantity = (pQuantity - 1) WHERE pID = ?");
             stmt.setInt(1, partID);
             stmt.executeUpdate();
-            System.out.print("Product: " + prodName + "(id: " + partID + ") Remaining Quantity: " + quantity);
+            System.out.println("Product: " + prodName + "(id: " + partID + ") Remaining Quantity: " + quantity);
 
             stmt = connection.prepareStatement("SELECT MAX(tID) AS MAX FROM transaction");
-            stmt.executeUpdate();
-            int tid = rs.getInt("MAX") + 1;
+            rs = stmt.executeQuery();
+            if (rs.next())
+                tid = rs.getInt("MAX") + 1;
 
             stmt = connection.prepareStatement("INSERT INTO transaction VALUES (?, ?, ?, CURDATE())");
             stmt.setInt(1, tid);
