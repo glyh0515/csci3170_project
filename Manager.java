@@ -83,8 +83,8 @@ public class Manager extends BaseModel {
         System.out.println("| ID | Name | Years of Experience | Number of Transaction |");
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(String.format(
-            "SELECT S.sID, S.sName, S.sExperience, T.SALE_TRANSACTION FROM (SELECT sID, sName, sExperience from salesperson) S, (SELECT sID, count(*) AS SALE_TRANSACTION from transaction GROUP by sID) T WHERE S.sID = T.sID AND S.sExperience >= %d AND S.sExperience <= %d GROUP BY S.sID, S.sName, S.sExperience ORDER BY S.sID DESC;"     
-        , lowerBound, upperBound));
+                "SELECT S.sID, S.sName, S.sExperience, T.SALE_TRANSACTION FROM (SELECT sID, sName, sExperience from salesperson) S, (SELECT sID, count(*) AS SALE_TRANSACTION from transaction GROUP by sID) T WHERE S.sID = T.sID AND S.sExperience >= %d AND S.sExperience <= %d GROUP BY S.sID, S.sName, S.sExperience ORDER BY S.sID DESC;",
+                lowerBound, upperBound));
         while (rs.next()) {
             System.out.println(String.format("| %d | %s | %d | %d", rs.getInt("S.sID"), rs.getString("S.sName"),
                     rs.getInt("S.sExperience"), rs.getInt("SALE_TRANSACTION")));
@@ -96,8 +96,7 @@ public class Manager extends BaseModel {
         System.out.println("| Manufacturer ID | Manufacturer Name | Total Sales Value |");
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(String.format(
-            "SELECT M.mID, M.mName, SUM(T.PART_SALE_COUNT * P.pPrice) AS TOTAL_SALES_VALUE FROM (SELECT mID, mName from manufacturer) M, SELECT pID, pPrice, mID from part) P, (SELECT pID, COUNT(*) AS PART_SALE_COUNT from transaction GROUP BY pID) T WHERE M.mID = P.mID AND P.pID = T.pID GROUP BY M.mID, M.mName ORDER BY TOTAL_SALES_VALUE DESC;"
-        ));
+                "SELECT M.mID, M.mName, SUM(T.PART_SALE_COUNT * P.pPrice) AS TOTAL_SALES_VALUE FROM (SELECT mID, mName from manufacturer) M, (SELECT pID, pPrice, mID from part) P, (SELECT pID, COUNT(*) AS PART_SALE_COUNT from transaction GROUP BY pID) T WHERE M.mID = P.mID AND P.pID = T.pID GROUP BY M.mID, M.mName ORDER BY TOTAL_SALES_VALUE DESC;"));
         while (rs.next()) {
             System.out.println(String.format("| %d | %s | %d |", rs.getInt("M.mID"), rs.getString("M.mName"),
                     rs.getInt("TOTAL_SALES_VALUE")));
