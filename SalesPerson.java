@@ -148,7 +148,7 @@ public class SalesPerson extends BaseModel {
             System.out.println("The part is unavailable.");
         }
         else if (!salesIDExist){
-            System.out.println("The salesperson not exist.");
+            System.out.println("The salesperson does not exist.");
         }
         else{
             System.out.println("The part cannot be sold.");
