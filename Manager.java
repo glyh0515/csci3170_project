@@ -67,8 +67,8 @@ public class Manager extends BaseModel {
         System.out.println("| ID | Name | Mobile Phone | Year of Experience |");
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(
-                String.format("SELECT sID, sName, sPhoneNum, sExperience FROM salesperson ORDER BY sExperience %s",
-                        (order == 1 ? "ASC;" : "DESC;")));
+                String.format("SELECT sID, sName, sPhoneNum, sExperience FROM salesperson ORDER BY sExperience %s;",
+                        (order == 1 ? "ASC" : "DESC")));
         while (rs.next()) {
             System.out.println(String.format("| %d | %s | %d | %d |", rs.getInt("sID"), rs.getString("sName"),
                     rs.getInt("sPhoneNum"), rs.getInt("sExperience")));
