@@ -50,10 +50,10 @@ public class SalesPerson extends BaseModel {
         System.out.println("2. Manufacturer Name ");
         System.out.print("Choose the Search Criterion: ");
         int choice = getValidChoice(1, 2);
-        
+
         System.out.print("Type in the Search Keyword: ");
         String kword = scanner.nextLine();
-        
+
         System.out.println("Choose ordering");
         System.out.println("1. By price, ascending order");
         System.out.println("2. By price, descending order");
@@ -65,22 +65,22 @@ public class SalesPerson extends BaseModel {
         switch (choice) {
             case 1:
                 switch (order) {
-                case 1:
-                    sql ="SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName LIKE ? ORDER BY pPrice";
-                    break;
-                case 2:
-                    sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName LIKE ? ORDER BY pPrice DESC";
-                    break;
+                    case 1:
+                        sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName LIKE ? ORDER BY pPrice";
+                        break;
+                    case 2:
+                        sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName LIKE ? ORDER BY pPrice DESC";
+                        break;
                 }
                 break;
             case 2:
                 switch (order) {
-                case 1:
-                    sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName LIKE ? ORDER BY pPrice";
-                    break;
-                case 2:
-                    sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName LIKE ? ORDER BY pPrice DESC";
-                    break;
+                    case 1:
+                        sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName LIKE ? ORDER BY pPrice";
+                        break;
+                    case 2:
+                        sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName LIKE ? ORDER BY pPrice DESC";
+                        break;
                 }
                 break;
         }
@@ -88,8 +88,11 @@ public class SalesPerson extends BaseModel {
         stmt.setString(1, "%" + kword + "%");
         ResultSet rs = stmt.executeQuery();
         while (rs.next()) {
-            System.out.println(String.format("| " + rs.getInt("pID") + " | " +  rs.getString("pName") + " | " + rs.getString("mName") + " | " + rs.getString("cName") +" | " + rs.getInt("pQuantity") + " | " + rs.getInt("pWarranty") + " | " + rs.getInt("pPrice") + " |"));
+            System.out.println(String.format("| " + rs.getInt("pID") + " | " + rs.getString("pName") + " | "
+                    + rs.getString("mName") + " | " + rs.getString("cName") + " | " + rs.getInt("pQuantity") + " | "
+                    + rs.getInt("pWarranty") + " | " + rs.getInt("pPrice") + " |"));
         }
+        System.out.println("End of Query\n");
         return;
     }
 
@@ -99,31 +102,31 @@ public class SalesPerson extends BaseModel {
         int partID, salesID, quantity = 0, tid = 0;
         boolean partIDExist = false, salesIDExist = false;
         String prodName = null;
-            System.out.print("Enter The Part ID: ");
-            partID = scanner.nextInt();
-            scanner.nextLine();
-            System.out.println("");
-            stmt = connection.prepareStatement("SELECT * FROM part WHERE pID = ?");
-            stmt.setInt(1, partID);
-            rs = stmt.executeQuery();
-            if (rs.next()) {
-                partIDExist = true;
-                quantity = rs.getInt("pQuantity");
-                prodName = rs.getString("pName");
-            }
+        System.out.print("Enter The Part ID: ");
+        partID = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("");
+        stmt = connection.prepareStatement("SELECT * FROM part WHERE pID = ?");
+        stmt.setInt(1, partID);
+        rs = stmt.executeQuery();
+        if (rs.next()) {
+            partIDExist = true;
+            quantity = rs.getInt("pQuantity");
+            prodName = rs.getString("pName");
+        }
 
-            System.out.print("Enter The Salesperson ID: ");
-            salesID = scanner.nextInt();
-            scanner.nextLine();
-            System.out.println("");
-            stmt = connection.prepareStatement("SELECT * FROM salesperson WHERE sID = ?");
-            stmt.setInt(1, salesID);
-            rs = stmt.executeQuery();
-            if (rs.next()) {
-                salesIDExist = true;
-            }
+        System.out.print("Enter The Salesperson ID: ");
+        salesID = scanner.nextInt();
+        scanner.nextLine();
+        System.out.println("");
+        stmt = connection.prepareStatement("SELECT * FROM salesperson WHERE sID = ?");
+        stmt.setInt(1, salesID);
+        rs = stmt.executeQuery();
+        if (rs.next()) {
+            salesIDExist = true;
+        }
 
-        if (quantity > 0 && partIDExist && salesIDExist){
+        if (quantity > 0 && partIDExist && salesIDExist) {
             quantity = quantity - 1;
             stmt = connection.prepareStatement("UPDATE part SET pQuantity = (pQuantity - 1) WHERE pID = ?");
             stmt.setInt(1, partID);
@@ -140,8 +143,7 @@ public class SalesPerson extends BaseModel {
             stmt.setInt(2, partID);
             stmt.setInt(3, salesID);
             stmt.executeUpdate();
-        }
-        else{
+        } else {
             System.out.println("The part cannot be sold.");
         }
         return;
