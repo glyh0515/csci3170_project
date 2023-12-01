@@ -90,7 +90,7 @@ public class Administrator extends BaseModel {
 
 		// Transaction
 		stmt.executeUpdate(
-				"CREATE TABLE transaction(tID INT(4) UNSIGNED NOT NULL, pID INT(3) UNSIGNED NOT NULL, sID INT(2) UNSIGNED NOT NULL, tDate CHAR(10), PRIMARY KEY (tID), FOREIGN KEY (pID) REFERENCES part(pID), FOREIGN KEY (sID) REFERENCES salesperson(sID))");
+				"CREATE TABLE transaction(tID INT(4) UNSIGNED NOT NULL, pID INT(3) UNSIGNED NOT NULL, sID INT(2) UNSIGNED NOT NULL, tDate Date, PRIMARY KEY (tID), FOREIGN KEY (pID) REFERENCES part(pID), FOREIGN KEY (sID) REFERENCES salesperson(sID))");
 	}
 
 	private void deleteAll() throws SQLException {
@@ -112,7 +112,7 @@ public class Administrator extends BaseModel {
 		stmt.execute(String.format("LOAD DATA LOCAL INFILE './%s/part.txt' REPLACE INTO TABLE part", folderPath));
 		stmt.execute(String.format("LOAD DATA LOCAL INFILE './%s/salesperson.txt' REPLACE INTO TABLE salesperson",
 				folderPath));
-		stmt.execute(String.format("LOAD DATA LOCAL INFILE './%s/transaction.txt' REPLACE INTO TABLE transaction",
+		stmt.execute(String.format("LOAD DATA LOCAL INFILE './%s/transaction.txt' REPLACE INTO TABLE transaction FIELDS TERMINATED BY '\t' (tID, pID, sID, @date) SET tDate = DATE_FORMAT(STR_TO_DATE(@date, '%d/%m/%Y'), '%Y/%m/%d')",
 				folderPath));
 	}
 
