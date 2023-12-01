@@ -62,7 +62,6 @@ public class SalesPerson extends BaseModel {
 
         PreparedStatement stmt;
         ResultSet rs;
-        String sql = null;
         System.out.println("| ID | Name | Manufacturer | Category | Quantity | Warranty | Price |");
         switch (choice) {
             case 1:
