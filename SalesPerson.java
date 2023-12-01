@@ -51,7 +51,7 @@ public class SalesPerson extends BaseModel {
         System.out.print("Choose the Search Criterion: ");
         int choice = getValidChoice(1, 2);
         
-        System.out.print("Type in the Search Keyword ");
+        System.out.print("Type in the Search Keyword: ");
         String kword = scanner.nextLine();
         
         System.out.println("Choose ordering");
