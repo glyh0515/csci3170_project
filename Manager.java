@@ -96,14 +96,8 @@ public class Manager extends BaseModel {
         System.out.println("| Manufacturer ID | Manufacturer Name | Total Sales Value |");
         Statement stmt = connection.createStatement();
         ResultSet rs = stmt.executeQuery(String.format(
-                "SELECT M.mID, M.mName, SUM(T.PART_SALE_COUNT * P.pPrice) AS TOTAL_SALES_VALUE\r\n" + //
-                        "FROM (SELECT mID, mName from manufacturer) M, \r\n" + //
-                        "(SELECT pID, pPrice, mID from part) P,\r\n" + //
-                        "(SELECT pID, COUNT(*) AS PART_SALE_COUNT from transaction GROUP BY pID) T\r\n" + //
-                        "WHERE M.mID = P.mID AND P.pID = T.pID\r\n" + //
-                        "GROUP BY M.mID, M.mName\r\n" + //
-                        "ORDER BY TOTAL_SALES_VALUE DESC;\r\n" + //
-                        ""));
+            "SELECT M.mID, M.mName, SUM(T.PART_SALE_COUNT * P.pPrice) AS TOTAL_SALES_VALUE FROM (SELECT mID, mName from manufacturer) M, SELECT pID, pPrice, mID from part) P, (SELECT pID, COUNT(*) AS PART_SALE_COUNT from transaction GROUP BY pID) T WHERE M.mID = P.mID AND P.pID = T.pID GROUP BY M.mID, M.mName ORDER BY TOTAL_SALES_VALUE DESC;"
+        ));
         while (rs.next()) {
             System.out.println(String.format("| %d | %s | %d |", rs.getInt("M.mID"), rs.getString("M.mName"),
                     rs.getInt("TOTAL_SALES_VALUE")));
