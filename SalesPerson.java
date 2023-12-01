@@ -97,9 +97,8 @@ public class SalesPerson extends BaseModel {
         ResultSet rs;
         PreparedStatement stmt;
         int partID, salesID, quantity = 0, tid = 0;
-        boolean idExists = false;
+        boolean partIDExist = false, salesIDExist = false;
         String prodName = null;
-        do{
             System.out.print("Enter The Part ID: ");
             partID = scanner.nextInt();
             scanner.nextLine();
@@ -108,17 +107,11 @@ public class SalesPerson extends BaseModel {
             stmt.setInt(1, partID);
             rs = stmt.executeQuery();
             if (rs.next()) {
-                idExists = true;
+                partIDExist = true;
                 quantity = rs.getInt("pQuantity");
                 prodName = rs.getString("pName");
-            } else {
-                System.out.println("The ID you entered does not exist in the table. Please try again.");
             }
-        }while(!idExists);
 
-        idExists = false;
-
-        do{
             System.out.print("Enter The Salesperson ID: ");
             salesID = scanner.nextInt();
             scanner.nextLine();
@@ -127,13 +120,10 @@ public class SalesPerson extends BaseModel {
             stmt.setInt(1, salesID);
             rs = stmt.executeQuery();
             if (rs.next()) {
-                idExists = true;
-            } else {
-                System.out.println("The ID you entered does not exist in the table. Please try again.");
+                salesIDExist = true;
             }
-        }while(!idExists);
 
-        if (quantity > 0){
+        if (quantity > 0 && partIDExist && salesIDExist){
             quantity = quantity - 1;
             stmt = connection.prepareStatement("UPDATE part SET pQuantity = (pQuantity - 1) WHERE pID = ?");
             stmt.setInt(1, partID);
@@ -152,7 +142,7 @@ public class SalesPerson extends BaseModel {
             stmt.executeUpdate();
         }
         else{
-            System.out.print("The part cannot be sold.");
+            System.out.println("The part cannot be sold.");
         }
         return;
     }
