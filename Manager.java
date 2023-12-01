@@ -30,6 +30,11 @@ public class Manager extends BaseModel {
                     }
                     break;
                 case 2:
+                    try {
+                        CountTransaction();
+                    } catch (SQLException e) {
+                        System.out.println(e);
+                    }
                     break;
                 case 3:
                     break;
@@ -65,22 +70,20 @@ public class Manager extends BaseModel {
         }
     }
 
-    /*
-     * "SELECT sID, sPhone, sName, sExperience FROM SALESPERSON ORDER BY sExperience"
-     * + (order == 1 ? "ASC" : "DESC") + ";"
-     */
-
     public void CountTransaction() throws SQLException {
         System.out.print("Type in the lower bound for years of experience: ");
+        int lowerBound = scanner.nextInt();
         System.out.print("Type in the upper bound for years of experience: ");
-        /*
-         * "SELECT S.sID, S.sName, S.sExperience, COUNT(T.sID)
-         * FROM SALESPERSON S, TRANSATION T
-         * WHERE S.sExpeirience >= " + lowerBound + " AND S.sExperience <= " +
-         * upperBound +
-         * "GROUP BY T.sID ORDER BY s.SID DESC"
-         * 
-         */
+        int upperBound = scanner.nextInt();
+        System.out.println("| ID | Name | Years of Experience | Number of Transaction |");
+        Statement stmt = connection.createStatement();
+        ResultSet rs = stmt.executeQuery(String.format(
+            "SELECT S.sID, S.sName, S.sExperience, T.SALE_TRANSACTION FROM (SELECT sID, sName, sExperience from salesperson) S, (SELECT sID, count(*) AS SALE_TRANSACTION from transaction GROUP by sID) T WHERE S.sID = T.sID AND S.sExperience >= %d AND S.sExperience <= %d GROUP BY S.sID, S.sName, S.sExperience ORDER BY S.sID DESC"     
+        , lowerBound, upperBound));
+        while (rs.next()) {
+            System.out.println(String.format("| %d | %s | %d | %d", rs.getInt("S.sID"), rs.getString("S.sName"),
+                    rs.getInt("S.sExperience"), rs.getInt("SALE_TRANSACTION")));
+        }
         return;
     }
 
