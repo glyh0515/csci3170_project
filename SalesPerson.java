@@ -68,20 +68,20 @@ public class SalesPerson extends BaseModel {
             case 1:
                 switch (order) {
                 case 1:
-                    sql = "SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice";
+                    sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice";
                     break;
                 case 2:
-                    sql = "SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice DESC";
+                    sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND pName = ? ORDER BY pPrice DESC";
                     break;
                 }
                 break;
             case 2:
                 switch (order) {
                 case 1:
-                    sql = "SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice";
+                    sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice";
                     break;
                 case 2:
-                    sql = "SELECT * FROM manufactuer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice DESC";
+                    sql = "SELECT * FROM manufacturer AS M, part AS P, category AS C WHERE P.mID =  M.mID AND P.cID = C.cID AND mName = ? ORDER BY pPrice DESC";
                     break;
                 }
                 break;
@@ -104,7 +104,7 @@ public class SalesPerson extends BaseModel {
             partID = scanner.nextInt();
             scanner.nextLine();
             System.out.println("");
-            stmt = connection.prepareStatement("SELECT * FROM PART WHERE pID = ?");
+            stmt = connection.prepareStatement("SELECT * FROM part WHERE pID = ?");
             stmt.setInt(1, partID);
             rs = stmt.executeQuery();
         }while(rs.next());
